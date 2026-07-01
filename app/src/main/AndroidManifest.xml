@@ -3,8 +3,7 @@
     package="com.miclaw.amapblocker">
 
     <application
-        android:label="高德去推广"
-        android:icon="@mipmap/ic_launcher"
+                android:label="高德去推广"
         android:allowBackup="false"
         android:supportsRtl="true">
 
