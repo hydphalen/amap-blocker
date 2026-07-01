@@ -77,5 +77,4 @@ lint/tmp/
 ehthumbs.db
 Thumbs.db
 
-# GitHub Actions
-.github/workflows/*.yml
+
