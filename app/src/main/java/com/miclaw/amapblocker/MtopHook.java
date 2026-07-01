@@ -127,10 +127,10 @@ public class MtopHook {
                         Log.i(TAG, "[LOG] API: " + apiName);
                     }
 
-                    // 判断是否需要屏蔽
+                                        // 判断是否需要屏蔽
                     if (shouldBlock(apiName)) {
                         // 标记这个 request 对象为"待拦截"
-                        request.setTag("amap_blocker_blocked", true);
+                        XposedHelpers.setAdditionalInstanceField(request, "amap_blocker_blocked", true);
                         Log.i(TAG, "[BLOCK] 标记拦截: " + apiName);
                         MtopLogger.logAdBlocked("MTOP_MARK", "标记拦截: " + apiName);
                     }
@@ -211,16 +211,12 @@ public class MtopHook {
                         Object request = extractRequest(param);
                         if (request == null) return;
 
-                        // 检查是否被标记为待拦截
-                        Boolean blocked = (Boolean) XposedHelpers.callMethod(
-                            request, "getTag", "amap_blocker_blocked");
-                        // getTag 可能不存在，换反射
-                        if (blocked == null) {
-                            try {
-                                blocked = (Boolean) XposedHelpers.getAdditionalInstanceField(
+                                                // 检查是否被标记为待拦截
+                        Boolean blocked = null;
+                        try {
+                            blocked = (Boolean) XposedHelpers.getAdditionalInstanceField(
                                     request, "amap_blocker_blocked");
-                            } catch (Throwable ignored) {}
-                        }
+                        } catch (Throwable ignored) {}
 
                         if (blocked != null && blocked) {
                             String apiName = safeCallStringMethod(request, "getApiName");
