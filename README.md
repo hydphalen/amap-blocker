@@ -7,9 +7,9 @@
 ### 主要功能
 
 1. **MTOP 网关 Hook**
-   - 拦截所有 MTOP API 请求
+   - 拦截所有包含 `recommend` / `relationrecommend` 的 API 请求
    - 记录请求参数和响应数据
-   - 识别推广相关 API
+   - 对特定推广 API 伪造空响应
 
 2. **内容/卡片系统 Hook**
    - Hook ContentWidgetRepository（内容卡片仓库）
@@ -22,15 +22,16 @@
    - 拦截推广卡片渲染
    - 移除列表中的推广项
 
-## 安装步骤
+## 快速开始
 
-### 前置要求
+### 方法一：GitHub Actions 自动构建（推荐）
 
-1. 已 root 的 Android 设备
-2. 已安装 LSPosed 框架
-3. 已安装高德地图
+1. Fork 本仓库到你的 GitHub 账号
+2. 推送代码到 `main` 或 `master` 分支
+3. 在 Actions 标签页查看构建进度
+4. 构建完成后，在 Artifacts 中下载 APK
 
-### 编译安装
+### 方法二：本地构建
 
 1. 使用 Android Studio 打开项目
 2. 编译生成 APK
@@ -39,7 +40,7 @@
 5. 选择作用域为「高德地图」
 6. 重启高德地图
 
-### 使用方法
+## 使用方法
 
 1. 启用模块后，打开高德地图
 2. 模块会自动记录所有 MTOP API 调用
@@ -80,6 +81,7 @@
 根据逆向分析，以下 API 可能包含推广内容：
 
 - `mtop.relationrecommend.mtoprecommend.recommendstream/1.0` - 推荐流
+- `mtop.relationrecommend.mtoprecommend.listRecommendMiniApps` - 小程序推荐
 - `mtop.autonavi.mp.*` - 高德地图相关 API
 - 包含 `recommend`、`promotion`、`advert` 等关键词的 API
 
@@ -115,6 +117,8 @@
 
 ```
 amap-blocker/
+├── .github/workflows/
+│   └── build.yml              # GitHub Actions 自动构建
 ├── app/
 │   └── src/main/
 │       ├── AndroidManifest.xml
