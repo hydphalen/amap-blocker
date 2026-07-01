@@ -36,11 +36,11 @@ public class MtopHook {
     //  需要屏蔽的 API（命中即拦截，返回空 JSON）
     //  先跑日志确认具体字符串后再往里加
     // ═══════════════════════════════════════════════════════════════
-    private static final Set<String> BLOCKED_APIS = new HashSet<>(Arrays.asList(
+        private static final Set<String> BLOCKED_APIS = new HashSet<>(Arrays.asList(
         // 小程序推荐
-        "mtop.relationrecommend.mtoprecommend.listRecommendMiniApps",
+        "mtop.relationrecommend.mtoprecommend.listRecommendMiniApps"
         // 以下先留占位，等日志跑出来再补具体 API 名
-        // "mtop.xxx.xxx.xxx",
+        // "mtop.xxx.xxx.xxx"
     ));
 
     // ═══════════════════════════════════════════════════════════════
