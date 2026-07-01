@@ -373,15 +373,14 @@ public class MtopHook {
                     FAKE_EMPTY_RESPONSE.getBytes("UTF-8"));
             } catch (Throwable ignored) {}
 
-            // 如果方法返回值是 MtopResponse，直接替换
-                        if (param.method.getReturnType().getName().contains("MtopResponse")) {
+                        // 如果方法返回值是 MtopResponse，直接替换
+            Method m = (Method) param.method;
+            if (m.getReturnType().getName().contains("MtopResponse")) {
                 param.setResult(fakeResponse);
                 Log.i(TAG, "[BLOCKED] 已伪造空响应");
             } else {
-                // 否则尝试通过回调传递
-                // 这种情况比较复杂，先标记
                 Log.w(TAG, "[BLOCKED] 无法直接伪造响应（方法返回类型: " + 
-                    param.method.getReturnType().getName() + "）");
+                    m.getReturnType().getName() + "）");
             }
         } catch (Throwable t) {
             Log.e(TAG, "[BLOCKED] 伪造响应失败", t);
